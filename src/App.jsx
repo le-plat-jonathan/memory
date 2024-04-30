@@ -5,12 +5,12 @@ import Title from './components/Title/Title';
 import Button from './components/Button/Button';
 
 const cardImages = [
-  { "src": "src/assets/img/helmet-1.png", matched: false },
-  { "src": "src/assets/img/potion-1.png", matched: false },
-  { "src": "src/assets/img/ring-1.png", matched: false },
-  { "src": "src/assets/img/scroll-1.png", matched: false },
-  { "src": "src/assets/img/shield-1.png", matched: false },
-  { "src": "src/assets/img/sword-1.png", matched: false },
+  { "src": "src/assets/img/card1.png", matched: false },
+  { "src": "src/assets/img/card2.png", matched: false },
+  { "src": "src/assets/img/card3.png", matched: false },
+  { "src": "src/assets/img/card4.png", matched: false },
+  { "src": "src/assets/img/card5.png", matched: false },
+  { "src": "src/assets/img/card6.webp", matched: false },
 ];
 
 function App() {

@@ -1,3 +1,7 @@
+body {
+  user-select: none;
+}
+
 .App {
   display: flex;
   max-width: 860px;
@@ -18,13 +22,13 @@ button {
 }
 
 button:hover {
-  background: #c23866;
-  color: #fff;
+  background: #ffffff;
+  color: #000000;
 }
 
 body {
   color: white;
-  background: rgb(51, 2, 45);
+  background: black;
 }
 
 .card-grid {
