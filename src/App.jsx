@@ -1,103 +1,94 @@
-
-import React, { Component } from 'react';
-
+import { useState, useEffect } from 'react';
 import './App.css';
-
 import Card from './components/Card/Card';
-import GuessCount from './components/GuessCount/GuessCount';
-import HallOfFame, { FAKE_HOF } from './components/HallOfFame/HallOfFame';
+import Title from './components/Title/Title';
+import Button from './components/Button/Button';
 
-const SIDE = 6
-const SYMBOLS = '😀🎉💖🎩🐶🐱🦄🐬🌍🌛🌞💫🍎🍌🍓🍐🍟🍿'
-const VISUAL_PAUSE_MSECS = 750
+const cardImages = [
+  { "src": "src/assets/img/helmet-1.png", matched: false },
+  { "src": "src/assets/img/potion-1.png", matched: false },
+  { "src": "src/assets/img/ring-1.png", matched: false },
+  { "src": "src/assets/img/scroll-1.png", matched: false },
+  { "src": "src/assets/img/shield-1.png", matched: false },
+  { "src": "src/assets/img/sword-1.png", matched: false },
+];
 
-class App extends Component {
+function App() {
+  const [cards, setCards] = useState([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
-  state = {
-    cards: this.generateCards(),
-    currentPair: [],
-    guesses: 0,
-    matchedCardIndices: [],
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map(card => ({ ...card, id: Math.random() }))
+      
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setCards(shuffledCards)
+    setTurns(0)
   }
 
-  generateCards() {
-    const result = []
-    const size = SIDE * SIDE
-    const candidates = shuffle(SYMBOLS)
-    while (result.length < size) {
-      const card = candidates.pop()
-      result.push(card, card)
-    }
-    return shuffle(result)
+  const handleChoice = (card) => {
+    console.log(card)
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
   }
 
-  // arrow function to guarantee "this" binding
-  handleCardClick = (index) => {
-    const { matchedCardIndices } = this.state
-    
-    if( !matchedCardIndices.includes(index) ){
-      const { currentPair } = this.state
-      if (currentPair.length === 2) {
-        return
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true)
+
+      if (choiceOne.src === choiceTwo.src) {
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true }
+            } else {
+              return card
+            }
+          })
+        })
+        resetTurn()
+      } else {
+        setTimeout(() => resetTurn(), 1000)
       }
-      if (currentPair.length === 0) {
-        this.setState({ currentPair: [index] })
-        return
-      }
-      this.handleNewPairClosedBy(index)
+
     }
+  }, [choiceOne, choiceTwo])
+
+  const resetTurn = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setTurns(prevTurns => prevTurns + 1)
+    setDisabled(false)
   }
 
-  handleNewPairClosedBy(index) {
-    const { cards, currentPair, guesses, matchedCardIndices } = this.state
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
-    if(index !== currentPair[0]){
-      const newPair = [currentPair[0], index]
-      const newGuesses = guesses + 1
-      const matched = cards[newPair[0]] === cards[newPair[1]]
-      this.setState({ currentPair: newPair, guesses: newGuesses })
-      if (matched) {
-        this.setState({ matchedCardIndices: [...matchedCardIndices, ...newPair] })
-      }
-      setTimeout(() => this.setState({ currentPair: [] }), VISUAL_PAUSE_MSECS)
-    }
+  return (
+    <div className="App">
+      <Title text='Memory Game'/>
+      <Button text='Reset' onClick={shuffleCards}/>
 
-
-  }
-
-  getFeedbackForCard(index) {
-    const { currentPair, matchedCardIndices } = this.state
-    const indexMatched = matchedCardIndices.includes(index)
-    if (currentPair.length < 2) {
-      return indexMatched || index === currentPair[0] ? 'visible' : 'hidden'
-    }
-  
-    if (currentPair.includes(index)) {
-      return indexMatched ? 'justMatched' : 'justMismatched'
-    }
-  
-    return indexMatched ? 'visible' : 'hidden'
-  }
-
-  render() {
-    const { cards, guesses, matchedCardIndices } = this.state
-    const won = matchedCardIndices.length === cards.length
-    return (
-      <div className="memory">
-        <GuessCount guesses={guesses} />
-        {cards.map((card, index) =>
-          <Card
-            key={index}
-            index={index}
+      <div className="card-grid">
+        {cards.map(card => (
+          <Card 
+            key={card.id}
             card={card}
-            feedback={this.getFeedbackForCard(index)}
-            onClick={this.handleCardClick}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
           />
-        )}
-        {won && <HallOfFame entries={FAKE_HOF} />}
+        ))}
       </div>
-    )
-  }
+
+      <p>Turns: {turns}</p>
+    </div>
+  );
 }
 
 export default App

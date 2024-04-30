@@ -1,26 +1,19 @@
-
-import React from 'react'
-import PropTypes from 'prop-types'
-
 import './Card.css'
 
-const HIDDEN_SYMBOL = '❓'
+export default function SingleCard({ card, handleChoice, flipped, disabled }) {
+  
+  const handleClick = () => {
+    if (!disabled) {
+      handleChoice(card)
+    }
+  }
 
-const Card = ({card, index, feedback, onClick}) => (
-    <div className={`card ${feedback}`} onClick={() => onClick(index)}>
-        {feedback === 'hidden'? HIDDEN_SYMBOL : card}
+  return (
+    <div className="card">
+      <div className={flipped ? "flipped" : ""}>
+        <img className="front" src={card.src} alt="card front" />
+        <img className="back" src="src\assets\img\cover.png" onClick={handleClick} alt="cover" />
+      </div>
     </div>
-)
-
-Card.propTypes = {
-    card: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    feedback: PropTypes.oneOf([
-        'hidden',
-        'justMatched',
-        'justMismatched',
-        'visible'
-    ])
+  )
 }
-
-export default Card
