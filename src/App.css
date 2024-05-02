@@ -6,8 +6,8 @@ body {
   display: flex;
   max-width: 860px;
   margin: 40px auto;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 button {
@@ -19,6 +19,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
+  width: 35%;
 }
 
 button:hover {
@@ -36,4 +37,25 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+}
+
+.leftDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 2%;
+  top: 7%;
+}
+
+.gameOverMessage {
+  font-size: 8rem;
+  color: red;
+  background: black;
+  padding: 2rem;
+  border-radius: 2rem;
+  position: absolute;
+  top: 25%;
+  left: 33.5%;
+  z-index: 10;
 }

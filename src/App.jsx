@@ -3,6 +3,7 @@ import './App.css';
 import Card from './components/Card/Card';
 import Title from './components/Title/Title';
 import Button from './components/Button/Button';
+import Player from './components/Player/Player';
 
 const cardImages = [
   { "src": "src/assets/img/card1.png", matched: false },
@@ -15,10 +16,12 @@ const cardImages = [
 
 function App() {
   const [cards, setCards] = useState([]);
-  const [turns, setTurns] = useState(0);
+  const [turns, setTurns] = useState(20);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [pairsRemaining, setPairsRemaining] = useState(12);
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -28,12 +31,28 @@ function App() {
     setChoiceOne(null)
     setChoiceTwo(null)
     setCards(shuffledCards)
-    setTurns(0)
+    setTurns(20)
+    setPairsRemaining(12);
+    setGameOver(false);
   }
 
   const handleChoice = (card) => {
     console.log(card)
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+  }
+
+  const resetTurn = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setTurns(prevTurns => {
+      if (prevTurns > 0) {
+        return prevTurns - 1;
+      } else {
+        setGameOver(true);
+        return 0;
+      }
+    });
+    setDisabled(false)
   }
 
   useEffect(() => {
@@ -42,13 +61,22 @@ function App() {
 
       if (choiceOne.src === choiceTwo.src) {
         setCards(prevCards => {
-          return prevCards.map(card => {
+          const updatedCards = prevCards.map(card => {
             if (card.src === choiceOne.src) {
               return { ...card, matched: true }
             } else {
               return card
             }
-          })
+          });
+
+          setPairsRemaining(prevPairs => prevPairs - 1);
+          console.log(pairsRemaining);
+
+          if (pairsRemaining === 1) {
+            setGameOver(true);
+          }
+
+          return updatedCards;
         })
         resetTurn()
       } else {
@@ -56,14 +84,7 @@ function App() {
       }
 
     }
-  }, [choiceOne, choiceTwo])
-
-  const resetTurn = () => {
-    setChoiceOne(null)
-    setChoiceTwo(null)
-    setTurns(prevTurns => prevTurns + 1)
-    setDisabled(false)
-  }
+  }, [choiceOne, choiceTwo, pairsRemaining])
 
   useEffect(() => {
     shuffleCards()
@@ -71,9 +92,14 @@ function App() {
 
   return (
     <div className="App">
-      <Title text='Memory Game'/>
-      <Button text='Reset' onClick={shuffleCards}/>
-
+      <div className='leftDisplay'>
+        <Title text='Memory Game'/>
+        <Button text='Reset' onClick={shuffleCards}/>
+        <p>Turns: {turns}</p>
+        <Player />
+      </div>
+      {gameOver && pairsRemaining === 0 && <p className="gameOverMessage">You win!</p>}
+      {gameOver && pairsRemaining !== 0 && <p className="gameOverMessage">You lose!</p>}
       <div className="card-grid">
         {cards.map(card => (
           <Card 
@@ -81,14 +107,12 @@ function App() {
             card={card}
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
+            disabled={disabled || gameOver}
           />
         ))}
       </div>
-
-      <p>Turns: {turns}</p>
     </div>
   );
 }
 
-export default App
+export default App;
