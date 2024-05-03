@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   user-select: none;
 }
@@ -21,6 +26,7 @@ button {
   cursor: pointer;
   font-size: 1em;
   width: 35%;
+  margin: 0.5rem;
 }
 
 button:hover {
@@ -62,6 +68,7 @@ body {
 }
 
 .lecteur {
+  gap: 1rem;
   width: 100%;
   align-items: center;
   justify-content: center;

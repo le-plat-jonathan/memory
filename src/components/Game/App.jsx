@@ -1,18 +1,10 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Card from './components/Card/Card';
-import Title from './components/Title/Title';
-import Button from './components/Button/Button';
-import Player from './components/Player/Player';
-
-const cardImages = [
-  { "src": "src/assets/img/card1.png", matched: false },
-  { "src": "src/assets/img/card2.png", matched: false },
-  { "src": "src/assets/img/card3.png", matched: false },
-  { "src": "src/assets/img/card4.png", matched: false },
-  { "src": "src/assets/img/card5.png", matched: false },
-  { "src": "src/assets/img/card6.webp", matched: false },
-];
+import Card from '../Card/Card';
+import Title from '../Title/Title';
+import Button from '../Button/Button';
+import Player from '../Player/Player';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -22,6 +14,16 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [pairsRemaining, setPairsRemaining] = useState(12);
+  const navigate = useNavigate();
+
+  const cardImages = [
+    { "src": "src/assets/img/card1.png", matched: false },
+    { "src": "src/assets/img/card2.png", matched: false },
+    { "src": "src/assets/img/card3.png", matched: false },
+    { "src": "src/assets/img/card4.png", matched: false },
+    { "src": "src/assets/img/card5.png", matched: false },
+    { "src": "src/assets/img/card6.webp", matched: false },
+  ];
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -34,6 +36,10 @@ function App() {
     setTurns(20)
     setPairsRemaining(12);
     setGameOver(false);
+  }
+
+  const navigateToMenu = () => {
+    navigate('/');
   }
 
   const handleChoice = (card) => {
@@ -95,6 +101,7 @@ function App() {
       <div className='leftDisplay'>
         <div className='lecteur'>
           <Title text='Memory Game'/>
+            <Button text='Menu' onClick={navigateToMenu}/>
             <Button text='Reset' onClick={shuffleCards}/>
             <p>Turns: {turns}</p>
             <div className='player'>
