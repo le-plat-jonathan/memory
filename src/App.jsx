@@ -93,10 +93,15 @@ function App() {
   return (
     <div className="App">
       <div className='leftDisplay'>
-        <Title text='Memory Game'/>
-        <Button text='Reset' onClick={shuffleCards}/>
-        <p>Turns: {turns}</p>
-        <Player />
+        <div className='lecteur'>
+          <Title text='Memory Game'/>
+            <Button text='Reset' onClick={shuffleCards}/>
+            <p>Turns: {turns}</p>
+            <div className='player'>
+            <img src='src/assets/img/logo.png' className='logo'/>
+            <Player/>
+          </div>
+        </div>
       </div>
       {gameOver && pairsRemaining === 0 && <p className="gameOverMessage">You win!</p>}
       {gameOver && pairsRemaining !== 0 && <p className="gameOverMessage">You lose!</p>}

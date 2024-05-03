@@ -99,14 +99,6 @@ function SoundPlayer() {
             <FontAwesomeIcon icon={faStop} />
         </button>
       </div>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value={progress}
-        onChange={handleChangeProgress}
-        style={{ width: '80%', display: 'block', margin: '0 auto' }}
-      />
     </div>
   );
 }
