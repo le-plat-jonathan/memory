@@ -100,7 +100,7 @@ function App() {
     <div className="App">
       <div className='leftDisplay'>
         <div className='lecteur'>
-          <Title text='Memory Game'/>
+          <Title text='HearthStone'/>
             <Button text='Menu' onClick={navigateToMenu}/>
             <Button className='resetBtn' text='Reset' onClick={shuffleCards}/>
             <p>Turns: {turns}</p>
