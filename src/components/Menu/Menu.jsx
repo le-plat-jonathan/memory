@@ -18,10 +18,11 @@ function Menu() {
   };
 
   return (
-    <div className="menu">
-      <h1>Welcome to Memory Game</h1>
-      <Button text="JOUER" onClick={handlePlay} />
-      <Button text="QUITTER" onClick={handleQuit} />
+    <div className='wallpaper'>
+      <div className="menu">
+        <Button text="PLAY" onClick={handlePlay} />
+        <Button text="QUIT" onClick={handleQuit} />
+      </div>
     </div>
   );
 }

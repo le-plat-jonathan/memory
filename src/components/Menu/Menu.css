@@ -1,14 +1,17 @@
+.wallpaper {
+    background: url('../../assets/img/hearthstone-wallpaper.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+
 .menu {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid #804c22;
-    outline: 5px solid #d4b95b;
     transform: translate(-50%, -50%);
     border-radius: 2rem;
-    padding: 1rem;
     position: absolute;
-    top: 50%;
     left: 50%;
+    bottom: 10%;
+    gap: 1rem;
+    justify-content: center;
+    width: 35%;
 }

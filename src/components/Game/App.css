@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
 * {
   margin: 0;
   padding: 0;
+  font-family: "Indie Flower", cursive;
 }
 
 body {
   user-select: none;
+  color: white;
+  background: url(../../assets/img/plateau.jpg);
+  background-size: cover;
 }
 
 .App {
@@ -19,14 +25,16 @@ button {
   background: none;
   border: 4px solid #804c22;
   outline: 5px solid #d4b95b;
-  padding: 6px 12px;
+  padding: 0.5rem;
   border-radius: 4px;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
-  width: 35%;
+  width: 40%;
   margin: 0.5rem;
+  background-color: transparent;
+  backdrop-filter: blur(2px);
 }
 
 button:hover {
@@ -34,15 +42,13 @@ button:hover {
   color: #000000;
 }
 
-body {
-  color: white;
-  background: black;
-}
-
 .card-grid {
+  top: 25.5%;
+  position: absolute;
   margin-top: 40px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-gap: 20px;
 }
 
@@ -107,7 +113,21 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #627cb3;
+  background-color: transparent;
+  backdrop-filter: blur(2px);
   padding: 1rem;
   border-radius: 2rem;
+}
+
+.resetBtn {
+  height: 10%;
+  width: 44%;
+  color: black;
+  border-radius: 19px;
+  position: absolute;
+  right: -433.5%;
+  top: 58%;
+  background: #d4b000;
+  outline: none;
+  border: 4px solid #7d5814;
 }

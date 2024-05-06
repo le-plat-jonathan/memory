@@ -102,7 +102,7 @@ function App() {
         <div className='lecteur'>
           <Title text='Memory Game'/>
             <Button text='Menu' onClick={navigateToMenu}/>
-            <Button text='Reset' onClick={shuffleCards}/>
+            <Button className='resetBtn' text='Reset' onClick={shuffleCards}/>
             <p>Turns: {turns}</p>
             <div className='player'>
             <img src='src/assets/img/logo.png' className='logo'/>
